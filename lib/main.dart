@@ -1,4 +1,4 @@
-import 'package:designs_app/src/pages/headers_page.dart';
+import 'package:designs_app/src/pages/animations_page.dart';
 import 'package:flutter/material.dart';
  
 void main() => runApp(MyApp());
@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: HeadersPage()
+      home: AnimationsPage()
     );
   }
 }
