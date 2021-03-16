@@ -28,11 +28,14 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
   void initState() {
     animationController = new AnimationController(vsync: this,duration: Duration(milliseconds: 4000));
 
-    animationRotate = Tween(begin: 0.0, end: 2 * Math.pi).animate(animationController);
+    animationRotate = Tween(begin: 0.0, end: 2 * Math.pi).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.easeInOut)
+    );
 
     animationController.addListener(() {
       if (animationController.status == AnimationStatus.completed) {
-        animationController.reverse();
+        //animationController.reverse();
+        animationController.reset();
       }
     //else if (animationController.status == AnimationStatus.dismissed) {
     //     animationController.forward();
