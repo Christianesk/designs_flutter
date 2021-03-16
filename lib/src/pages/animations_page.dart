@@ -34,7 +34,9 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
       CurvedAnimation(parent: animationController, curve: Curves.easeInOut)
     );
 
-    opacity = Tween(begin: 0.1, end: 1.0).animate(animationController);
+    opacity = Tween(begin: 0.1, end: 1.0).animate(
+      CurvedAnimation(parent: animationController, curve: Interval(0, 0.25,curve: Curves.easeOut))
+    );
 
     animationController.addListener(() {
       if (animationController.status == AnimationStatus.completed) {
