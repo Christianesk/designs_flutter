@@ -24,6 +24,7 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
   AnimationController animationController;
   Animation<double> animationRotate;
   Animation<double> opacity;
+  Animation<double> moveRight;
 
 
   @override
@@ -31,11 +32,15 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
     animationController = new AnimationController(vsync: this,duration: Duration(milliseconds: 4000));
 
     animationRotate = Tween(begin: 0.0, end: 2 * Math.pi).animate(
-      CurvedAnimation(parent: animationController, curve: Curves.easeInOut)
+      CurvedAnimation(parent: animationController, curve: Curves.easeOut)
     );
 
     opacity = Tween(begin: 0.1, end: 1.0).animate(
       CurvedAnimation(parent: animationController, curve: Interval(0, 0.25,curve: Curves.easeOut))
+    );
+
+    moveRight = Tween(begin: 0.0, end: 200.0).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.easeOut)
     );
 
     animationController.addListener(() {
@@ -65,12 +70,15 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
       animation: animationController,
       child: _Rectangle(),
       builder: (BuildContext context, Widget childRectangle) {
-        return Transform.rotate(
-          angle: animationRotate.value,
-          child: Opacity(
-            opacity: opacity.value,
-            child: childRectangle,
-          )
+        return Transform.translate(
+          offset: Offset(moveRight.value, 0),
+          child: Transform.rotate(
+            angle: animationRotate.value,
+            child: Opacity(
+              opacity: opacity.value,
+              child: childRectangle,
+            )
+          ),
         );
       },
     );
