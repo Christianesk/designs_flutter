@@ -24,6 +24,7 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
   AnimationController animationController;
   Animation<double> animationRotate;
   Animation<double> opacity;
+  Animation<double> opacityOut;
   Animation<double> moveRight;
   Animation<double> scale;
 
@@ -39,6 +40,9 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
     opacity = Tween(begin: 0.1, end: 1.0).animate(
       CurvedAnimation(parent: animationController, curve: Interval(0, 0.25,curve: Curves.easeOut))
     );
+    opacityOut = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: animationController, curve: Interval(0.75, 1.0,curve: Curves.easeOut))
+    );
 
     moveRight = Tween(begin: 0.0, end: 200.0).animate(
       CurvedAnimation(parent: animationController, curve: Curves.easeOut)
@@ -50,7 +54,8 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
 
     animationController.addListener(() {
       if (animationController.status == AnimationStatus.completed) {
-        //animationController.reverse();
+        //animationController.repeat();
+        // animationController.reverse();
         animationController.reset();
       }
     //else if (animationController.status == AnimationStatus.dismissed) {
@@ -80,7 +85,7 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
           child: Transform.rotate(
             angle: animationRotate.value,
             child: Opacity(
-              opacity: opacity.value,
+              opacity: opacity.value - opacityOut.value,
               child: Transform.scale(
                 scale: scale.value,
                 child: childRectangle
